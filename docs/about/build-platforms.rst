@@ -116,7 +116,7 @@ Rust build dependencies
   bindgen tool, which is too big to package and distribute.  The minimum
   supported version of bindgen is 0.60.x.  For distributions that do not
   include bindgen or have an older version, it is recommended to install
-  a newer version using ``cargo install bindgen-cli``.
+  a newer version using ``cargo install --locked bindgen-cli``.
 
   Developers may want to use Cargo-based tools in the QEMU source tree;
   this requires Cargo 1.74.0.  Note that Cargo is not required in order
