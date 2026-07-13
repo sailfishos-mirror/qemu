@@ -1720,6 +1720,20 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUM68KState *e
 #define ELF_CLASS      ELFCLASS64
 #define ELF_ARCH       EM_ALPHA
 
+#define ELF_HWCAP get_elf_hwcap()
+
+static uint32_t get_elf_hwcap(void)
+{
+    CPUState *cs = thread_cpu;
+    /*
+     * The Linux kernel computes ELF_HWCAP as ~amask(-1), which clears a bit
+     * for each supported ISA extension.  env->amask stores exactly those bits
+     * set for the extensions supported by the emulated CPU model, matching
+     * the kernel's convention: bit set in AT_HWCAP ↔ extension present.
+     */
+    return cpu_env(cs)->amask;
+}
+
 static inline void init_thread(struct target_pt_regs *regs,
                                struct image_info *infop)
 {
